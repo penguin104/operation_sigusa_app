@@ -17,8 +17,16 @@ int sv_angleVal[3] = { 90, 70, 170 };
 
 // サーボモータクラス
 // ピン設定等コンストラクタにて設定
-class servo{
+class Servo_pca9685{
+  private:
+
+    int pin;
   
+  public:
+  // コンストラクタ
+    Servo_pca9685(int output_pin){
+      pin = output_pin;
+    }
 };
 
 

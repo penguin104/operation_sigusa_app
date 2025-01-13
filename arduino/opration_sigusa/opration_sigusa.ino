@@ -62,7 +62,42 @@ class Servo_pca9685 {
     }
 };
 
+// DCモータの制御クラス
+class DCmotor {
+  private:
+    const int max_speed = 1600,min_speed = 0;
+    
+    Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
+    
+    int pin_black,pin_white,
+    default_speed_right = max_speed,
+    default_speed_left = max_speed;
 
+  public:
+    DCmotor(int output_pin_black,output_pin_white){
+      pin_black = output_pin_black;
+      pin_white = output_pin_white;
+      pwm.begin();
+      pwm.setPWMFreq(1600);
+    }
+
+    void power_right(int speed = default_speed){
+      default_speed_right = speed;
+      pwm.setPWM(pin_black,min_speed,speed);
+      pwm.setPWM(pin_white,min_speed,min_speed);
+    }
+
+    void power_left(int speed = default_speed){
+      default_speed_left = speed;
+      pwm.setPWM(pin_black,min_speed,min_speed);
+      pwm.setPWM(pin_white,min_speed,speed);
+    }
+
+    void power_stop(){
+      pwm.setPWM(pin_black,min_speed,min_speed);
+      pwm.setPWM(pin_white,min_speed,min_speed);
+    }
+}
 
 void setup() {
   // put your setup code here, to run once:

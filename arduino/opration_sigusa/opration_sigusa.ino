@@ -7,20 +7,7 @@
 #include <M5Stack.h>
 
 
-//pca9685接続ピン列挙型
-enum pca9685_no {
-  sv1,         //首
-  sv2,         //右フリッパー
-  sv3,         //左フリッパー
-  dc_right_b,  //右DCモータ
-  dc_right_w,  //右DCモータ
-  dc_left_b,   //左dcモータ
-  dc_left_w    //左dcモータ
-};
-
-//サーボモータの中心の値sv1から
-int sv_angleVal[3] = { 90, 70, 170 };
-
+// クラス定義
 
 // サーボモータクラス
 // ピン設定等コンストラクタにて設定
@@ -80,7 +67,7 @@ class DCmotor {
       pwm.begin();
       pwm.setPWMFreq(1600);
     }
-
+// モータの片方の端子に電流を流して回転方向を制御する
     void power_right(int speed = default_speed){
       default_speed_right = speed;
       pwm.setPWM(pin_black,min_speed,speed);
@@ -98,6 +85,21 @@ class DCmotor {
       pwm.setPWM(pin_white,min_speed,min_speed);
     }
 }
+
+//pca9685接続ピン列挙型
+// w：白ケーブル b：黒ケーブル（試作を参照;水色のやつ）
+enum pca9685_no {
+  sv1,         //首
+  sv2,         //右フリッパー
+  sv3,         //左フリッパー
+  dc_right_b,  //右DCモータ
+  dc_right_w,  //右DCモータ
+  dc_left_b,   //左dcモータ
+  dc_left_w    //左dcモータ
+};
+
+//サーボモータの中心の値sv1から
+int sv_angleVal[3] = { 90, 70, 170 };
 
 void setup() {
   // put your setup code here, to run once:

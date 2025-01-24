@@ -1,5 +1,3 @@
-
-
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <Wire.h>
@@ -43,7 +41,7 @@ class Servo_pca9685 {
         servo_min,
         servo_max);
 
-      pwm.writeMicroseconds(sv1, angle);
+      pwm.writeMicroseconds(pin, angle);
       // 現在の角度に設定
       now_angle = angle;
     }
@@ -61,20 +59,20 @@ class DCmotor {
     default_speed_left = max_speed;
 
   public:
-    DCmotor(int output_pin_black,output_pin_white){
+    DCmotor(int output_pin_black, int output_pin_white){
       pin_black = output_pin_black;
       pin_white = output_pin_white;
       pwm.begin();
       pwm.setPWMFreq(1600);
     }
 // モータの片方の端子に電流を流して回転方向を制御する
-    void power_right(int speed = default_speed){
+    void power_right(int speed){
       default_speed_right = speed;
       pwm.setPWM(pin_black,min_speed,speed);
       pwm.setPWM(pin_white,min_speed,min_speed);
     }
 
-    void power_left(int speed = default_speed){
+    void power_left(int speed){
       default_speed_left = speed;
       pwm.setPWM(pin_black,min_speed,min_speed);
       pwm.setPWM(pin_white,min_speed,speed);
@@ -84,7 +82,7 @@ class DCmotor {
       pwm.setPWM(pin_black,min_speed,min_speed);
       pwm.setPWM(pin_white,min_speed,min_speed);
     }
-}
+};
 
 //pca9685接続ピン列挙型
 // w：白ケーブル b：黒ケーブル（試作を参照;水色のやつ）
@@ -100,6 +98,15 @@ enum pca9685_no {
 
 //サーボモータの中心の値sv1から
 int sv_angleVal[3] = { 90, 70, 170 };
+
+// サーボモータとDCモータのインスタンスを生成
+
+Servo_pca9685 servo1 = Servo_pca9685(sv1,sv_angleVal[0]);
+Servo_pca9685 servo2 = Servo_pca9685(sv2,sv_angleVal[1]);
+Servo_pca9685 servo3 = Servo_pca9685(sv3,sv_angleVal[2]);
+
+DCmotor dc_right = DCmotor(dc_right_b, dc_right_w);
+DCmotor dc_left = DCmotor(dc_left_b, dc_left_w);
 
 void setup() {
   // put your setup code here, to run once:

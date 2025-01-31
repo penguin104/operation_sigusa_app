@@ -19,28 +19,37 @@ class _HomeState extends State<Home> {
         foregroundColor: Colors.white,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             children: [
               Expanded(
                 child: SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 100,
+                  height: 100,
                 ),
               ),
               Expanded(
-                child: ElevatedButton(
-                    onPressed: () {
-                      //TODO:前進の命令
-                    },
-                    child: Icon(
-                      Icons.north,
-                    )),
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        //TODO:前進の命令
+                      },
+                      onLongPress: () {
+                        // TODO:長押しの処理
+                      },
+                      child: Icon(
+                        size: 40,
+                        Icons.north,
+                      )),
+                ),
               ),
               Expanded(
                 child: SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 100,
+                  height: 100,
                 ),
               ),
             ],
@@ -48,31 +57,55 @@ class _HomeState extends State<Home> {
           Row(
             children: [
               Expanded(
-                child: ElevatedButton(
-                    onPressed: () {
-                      //TODO:左回転の命令
-                    },
-                    child: Icon(
-                      Icons.west,
-                    )),
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        //TODO:左回転の命令
+                      },
+                      onLongPress: () {
+                        // TODO:長押しの処理
+                      },
+                      child: Icon(
+                        size: 40,
+                        Icons.west,
+                      )),
+                ),
               ),
               Expanded(
-                child: ElevatedButton(
-                    onPressed: () {
-                      //TODO:アクションの命令
-                    },
-                    child: Icon(
-                      Icons.ac_unit_outlined,
-                    )),
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        //TODO:アクションの命令
+                      },
+                      onLongPress: () {
+                        // TODO:長押しの処理
+                      },
+                      child: Icon(
+                        size: 40,
+                        Icons.ac_unit_outlined,
+                      )),
+                ),
               ),
               Expanded(
-                child: ElevatedButton(
-                    onPressed: () {
-                      //TODO:右回転の命令
-                    },
-                    child: Icon(
-                      Icons.east,
-                    )),
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        //TODO:右回転の命令
+                      },
+                      onLongPress: () {
+                        // TODO:長押しの処理
+                      },
+                      child: Icon(
+                        size: 40,
+                        Icons.east,
+                      )),
+                ),
               ),
             ],
           ),
@@ -80,23 +113,31 @@ class _HomeState extends State<Home> {
             children: [
               Expanded(
                 child: SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 100,
+                  height: 100,
                 ),
               ),
               Expanded(
-                child: ElevatedButton(
-                    onPressed: () {
-                      //TODO:後退の命令
-                    },
-                    child: Icon(
-                      Icons.south,
-                    )),
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        //TODO:後退の命令
+                      },
+                      onLongPress: () {
+                        // TODO:長押しの処理
+                      },
+                      child: Icon(
+                        Icons.south,
+                        size: 40,
+                      )),
+                ),
               ),
               Expanded(
                 child: SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 100,
+                  height: 100,
                 ),
               ),
             ],

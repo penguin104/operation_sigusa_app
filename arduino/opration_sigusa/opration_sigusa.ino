@@ -110,6 +110,8 @@ DCmotor dc_left = DCmotor(dc_left_b, dc_left_w);
 
 void setup() {
   // put your setup code here, to run once:
+  
+  Serial.begin(9600);
 }
 
 void loop() {

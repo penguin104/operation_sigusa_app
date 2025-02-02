@@ -1,5 +1,8 @@
-#include <WiFi.h>
-#include <HTTPClient.h>
+// Bluetooth
+#include <BluetoothSerial.h>
+
+// #include <WiFi.h>
+// #include <HTTPClient.h>
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <M5Stack.h>
@@ -101,19 +104,60 @@ int sv_angleVal[3] = { 90, 70, 170 };
 
 // サーボモータとDCモータのインスタンスを生成
 
-Servo_pca9685 servo1 = Servo_pca9685(sv1,sv_angleVal[0]);
-Servo_pca9685 servo2 = Servo_pca9685(sv2,sv_angleVal[1]);
-Servo_pca9685 servo3 = Servo_pca9685(sv3,sv_angleVal[2]);
+// Servo_pca9685 servo1 = Servo_pca9685(sv1,sv_angleVal[0]);
+// Servo_pca9685 servo2 = Servo_pca9685(sv2,sv_angleVal[1]);
+// Servo_pca9685 servo3 = Servo_pca9685(sv3,sv_angleVal[2]);
 
-DCmotor dc_right = DCmotor(dc_right_b, dc_right_w);
-DCmotor dc_left = DCmotor(dc_left_b, dc_left_w);
+// DCmotor dc_right = DCmotor(dc_right_b, dc_right_w);
+// DCmotor dc_left = DCmotor(dc_left_b, dc_left_w);
+
+// pin
+const char *pin = "1234";
+
+String device_name = "SIGUSA";
+BluetoothSerial SerialBT;
 
 void setup() {
   // put your setup code here, to run once:
-  
-  Serial.begin(9600);
+  M5.begin();
+  M5.Lcd.begin();
+  Serial.begin(115200);
+  SerialBT.begin(device_name);
+  Serial.println("\nNow you can pair it with bluetooth!");
+  M5.Lcd.println("start m5 stack");
+  #ifdef USE_PIN
+    SerialBT.setPin(pin);
+    Serial.println("use pin");
+    M5.Lcd.println("use pin");
+  #endif
 }
 
 void loop() {
+  static int state = 0;
+  int read_data;
+  M5.update();
+
+  if (state == 0){
+    delay(20);
+    // esp to phone
+    if (Serial.available()) {
+        SerialBT.write(Serial.read());
+    }
+    // phone to esp
+    if (SerialBT.available()) {
+        read_data = SerialBT.read();
+        Serial.write(read_data);
+        M5.Lcd.write(read_data);
+    }
+  }else if(state == 2){
+
+  }else if(state == 3){
+
+  }else if(state == 4){
+
+  }else if(state == 5){
+
+  }
+  
   // put your main code here, to run repeatedly:
 }

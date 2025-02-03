@@ -9,12 +9,12 @@
 
 
 // クラス定義
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
 // サーボモータクラス
 // ピン設定等コンストラクタにて設定
 class Servo_pca9685 {
   private:
-    Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
     int pin,
         now_angle;
@@ -28,9 +28,9 @@ class Servo_pca9685 {
   public:
     // コンストラクタ
     Servo_pca9685(int output_pin, int default_angle = 90) {
+      
       pin = output_pin;
       now_angle = default_angle;
-      pwm.begin();
     }
 
     void angle(int angle) {
@@ -55,8 +55,6 @@ class DCmotor {
   private:
     const int max_speed = 1600,min_speed = 0;
     
-    Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
-    
     int pin_black,pin_white,
     default_speed_right = max_speed,
     default_speed_left = max_speed;
@@ -65,23 +63,24 @@ class DCmotor {
     DCmotor(int output_pin_black, int output_pin_white){
       pin_black = output_pin_black;
       pin_white = output_pin_white;
-      pwm.begin();
-      pwm.setPWMFreq(1600);
     }
 // モータの片方の端子に電流を流して回転方向を制御する
     void power_right(int speed){
+      pwm.setPWMFreq(1600);
       default_speed_right = speed;
       pwm.setPWM(pin_black,min_speed,speed);
       pwm.setPWM(pin_white,min_speed,min_speed);
     }
 
     void power_left(int speed){
+      pwm.setPWMFreq(1600);
       default_speed_left = speed;
       pwm.setPWM(pin_black,min_speed,min_speed);
       pwm.setPWM(pin_white,min_speed,speed);
     }
 
     void power_stop(){
+      pwm.setPWMFreq(1600);
       pwm.setPWM(pin_black,min_speed,min_speed);
       pwm.setPWM(pin_white,min_speed,min_speed);
     }
@@ -104,12 +103,12 @@ int sv_angleVal[3] = { 90, 70, 170 };
 
 // サーボモータとDCモータのインスタンスを生成
 
-// Servo_pca9685 servo1 = Servo_pca9685(sv1,sv_angleVal[0]);
-// Servo_pca9685 servo2 = Servo_pca9685(sv2,sv_angleVal[1]);
-// Servo_pca9685 servo3 = Servo_pca9685(sv3,sv_angleVal[2]);
+Servo_pca9685 servo1 = Servo_pca9685(sv1,sv_angleVal[0]);
+Servo_pca9685 servo2 = Servo_pca9685(sv1,sv_angleVal[1]);
+Servo_pca9685 servo3 = Servo_pca9685(sv1,sv_angleVal[2]);
 
-// DCmotor dc_right = DCmotor(dc_right_b, dc_right_w);
-// DCmotor dc_left = DCmotor(dc_left_b, dc_left_w);
+DCmotor dc_right = DCmotor(dc_right_b, dc_right_w);
+DCmotor dc_left = DCmotor(dc_left_b, dc_left_w);
 
 // pin
 const char *pin = "1234";
@@ -119,6 +118,7 @@ BluetoothSerial SerialBT;
 
 void setup() {
   // put your setup code here, to run once:
+  pwm.begin();
   M5.begin();
   M5.Lcd.begin();
   Serial.begin(115200);
@@ -130,6 +130,7 @@ void setup() {
     Serial.println("use pin");
     M5.Lcd.println("use pin");
   #endif
+
 }
 
 void loop() {
